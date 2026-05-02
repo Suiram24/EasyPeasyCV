@@ -717,6 +717,46 @@ export function CreativeTemplate({
               </View>
             )}
 
+                        {/* Projects */}
+            {projects.length > 0 && (
+              <View style={{ ...styles.section, marginBottom: 0 }}>
+                <View wrap={false}>
+                  <Text style={styles.sectionTitle}>{lang === 'en' ? 'Shipped Games' : lang === 'es' ? 'Proyectos' : 'Projetos'}</Text>
+                  {projects.length > 0 && (
+                    <View style={{ height: 0 }} />
+                  )}
+                </View>
+
+                {projects.map((proj, index) => {
+                  const isLast = index === projects.length - 1;
+                  return (
+                    <View key={index} wrap={false} style={{
+                      ...styles.projBlock,
+                      marginBottom: isLast ? 0 : styles.projBlock.marginBottom,
+                      paddingBottom: isLast ? 0 : styles.projBlock.paddingBottom,
+                    }}>
+                      <View style={styles.roleAndDate}>
+                        <Text style={styles.projName}>{proj.name}</Text>
+                        <Text style={styles.projYear}>{proj.year}</Text>
+                      </View>
+                      {proj.tech && <Text style={dynamicStyles.projTech}>{proj.tech}</Text>}
+                      {proj.description && <Text style={styles.projDesc}>{proj.description}</Text>}
+                      {proj.link && (
+                        <Link src={proj.link} style={dynamicStyles.projLink}>
+                          {lang === 'en' ? 'View on Steam' : lang === 'es' ? 'Ver Proyecto' : 'Ver Projeto'}
+                        </Link>
+                      )}
+                      {proj.sourceCode && (
+                        <Link src={proj.sourceCode} style={dynamicStyles.projLink}>
+                          {lang === 'en' ? 'Source Code' : lang === 'es' ? 'Código fuente' : 'Código-fonte'}
+                        </Link>
+                      )}
+                    </View>
+                  );
+                })}
+              </View>
+            )}
+
             {/* Professional Experience */}
             {experiences.length > 0 && (
               <View style={styles.section}>
@@ -848,46 +888,6 @@ export function CreativeTemplate({
                       <Text style={styles.volOrg}>{vol.organization}</Text>
                       {vol.description && <Text style={styles.volDesc}>{vol.description}</Text>}
                       {vol.impact && <Text style={styles.volImpact}>{vol.impact}</Text>}
-                    </View>
-                  );
-                })}
-              </View>
-            )}
-
-            {/* Projects */}
-            {projects.length > 0 && (
-              <View style={{ ...styles.section, marginBottom: 0 }}>
-                <View wrap={false}>
-                  <Text style={styles.sectionTitle}>{lang === 'en' ? 'Shipped Games' : lang === 'es' ? 'Proyectos' : 'Projetos'}</Text>
-                  {projects.length > 0 && (
-                    <View style={{ height: 0 }} />
-                  )}
-                </View>
-
-                {projects.map((proj, index) => {
-                  const isLast = index === projects.length - 1;
-                  return (
-                    <View key={index} wrap={false} style={{
-                      ...styles.projBlock,
-                      marginBottom: isLast ? 0 : styles.projBlock.marginBottom,
-                      paddingBottom: isLast ? 0 : styles.projBlock.paddingBottom,
-                    }}>
-                      <View style={styles.roleAndDate}>
-                        <Text style={styles.projName}>{proj.name}</Text>
-                        <Text style={styles.projYear}>{proj.year}</Text>
-                      </View>
-                      {proj.tech && <Text style={dynamicStyles.projTech}>{proj.tech}</Text>}
-                      {proj.description && <Text style={styles.projDesc}>{proj.description}</Text>}
-                      {proj.link && (
-                        <Link src={proj.link} style={dynamicStyles.projLink}>
-                          {lang === 'en' ? 'View on Steam' : lang === 'es' ? 'Ver Proyecto' : 'Ver Projeto'}
-                        </Link>
-                      )}
-                      {proj.sourceCode && (
-                        <Link src={proj.sourceCode} style={dynamicStyles.projLink}>
-                          {lang === 'en' ? 'Source Code' : lang === 'es' ? 'Código fuente' : 'Código-fonte'}
-                        </Link>
-                      )}
                     </View>
                   );
                 })}

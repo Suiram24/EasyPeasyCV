@@ -313,6 +313,32 @@ export function MinimalTemplate({
               </View>
             )}
 
+                        {projects && projects.length > 0 && (
+              <View style={styles.section}>
+                <Text style={[styles.sectionTitle, dynamic.sectionTitle]}>{lang === 'en' ? 'Projects' : lang === 'es' ? 'Projets' : 'Projetos'}</Text>
+                {projects.map((proj, i) => (
+                  <View key={i} style={styles.projBlock}>
+                    <View style={styles.roleAndDate}>
+                      <Text style={styles.projName}>{proj.name}</Text>
+                      <Text style={styles.projYear}>{proj.year}</Text>
+                    </View>
+                    {proj.tech && <Text style={styles.projTech}>{proj.tech}</Text>}
+                    {proj.description && <Text style={styles.projDesc}>{proj.description}</Text>}
+                    {proj.link && (
+                      <Link src={proj.link} style={styles.projLink}>
+                        {lang === 'en' ? 'View on Steam' : lang === 'es' ? 'Page Steam' : 'Ver Projeto'}
+                      </Link>
+                    )}
+                    {proj.sourceCode && (
+                      <Link src={proj.sourceCode} style={styles.projLink}>
+                        {lang === 'en' ? 'Source Code' : lang === 'es' ? 'Code Source' : 'Código-fonte'}
+                      </Link>
+                    )}
+                  </View>
+                ))}
+              </View>
+            )}
+
             {experiences && experiences.length > 0 && (
               <View style={styles.section}>
                 <Text style={[styles.sectionTitle, dynamic.sectionTitle]}>{lang === 'en' ? 'Experience' : lang === 'es' ? 'Expériences Professionnelles' : 'Experiência'}</Text>
@@ -338,32 +364,6 @@ export function MinimalTemplate({
                     </View>
                   );
                 })}
-              </View>
-            )}
-
-            {projects && projects.length > 0 && (
-              <View style={styles.section}>
-                <Text style={[styles.sectionTitle, dynamic.sectionTitle]}>{lang === 'en' ? 'Projects' : lang === 'es' ? 'Projets' : 'Projetos'}</Text>
-                {projects.map((proj, i) => (
-                  <View key={i} style={styles.projBlock}>
-                    <View style={styles.roleAndDate}>
-                      <Text style={styles.projName}>{proj.name}</Text>
-                      <Text style={styles.projYear}>{proj.year}</Text>
-                    </View>
-                    {proj.tech && <Text style={styles.projTech}>{proj.tech}</Text>}
-                    {proj.description && <Text style={styles.projDesc}>{proj.description}</Text>}
-                    {proj.link && (
-                      <Link src={proj.link} style={styles.projLink}>
-                        {lang === 'en' ? 'View on Steam' : lang === 'es' ? 'Page Steam' : 'Ver Projeto'}
-                      </Link>
-                    )}
-                    {proj.sourceCode && (
-                      <Link src={proj.sourceCode} style={styles.projLink}>
-                        {lang === 'en' ? 'Source Code' : lang === 'es' ? 'Code Source' : 'Código-fonte'}
-                      </Link>
-                    )}
-                  </View>
-                ))}
               </View>
             )}
 
