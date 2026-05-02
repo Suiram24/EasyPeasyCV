@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     color: '#ffffff'
   },
   name: { 
-    fontSize: 32, 
+    fontSize: 26, 
     fontWeight: 'bold', 
     marginBottom: 8,
     color: '#ffffff',
@@ -858,11 +858,12 @@ export function CreativeTemplate({
             {projects.length > 0 && (
               <View style={{ ...styles.section, marginBottom: 0 }}>
                 <View wrap={false}>
-                  <Text style={styles.sectionTitle}>{lang === 'en' ? 'Projects' : lang === 'es' ? 'Proyectos' : 'Projetos'}</Text>
+                  <Text style={styles.sectionTitle}>{lang === 'en' ? 'Shipped Games' : lang === 'es' ? 'Proyectos' : 'Projetos'}</Text>
                   {projects.length > 0 && (
                     <View style={{ height: 0 }} />
                   )}
                 </View>
+
                 {projects.map((proj, index) => {
                   const isLast = index === projects.length - 1;
                   return (
@@ -879,7 +880,7 @@ export function CreativeTemplate({
                       {proj.description && <Text style={styles.projDesc}>{proj.description}</Text>}
                       {proj.link && (
                         <Link src={proj.link} style={dynamicStyles.projLink}>
-                          {lang === 'en' ? 'View Project' : lang === 'es' ? 'Ver Proyecto' : 'Ver Projeto'}
+                          {lang === 'en' ? 'View on Steam' : lang === 'es' ? 'Ver Proyecto' : 'Ver Projeto'}
                         </Link>
                       )}
                       {proj.sourceCode && (

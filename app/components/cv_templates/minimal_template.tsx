@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   activities: { fontSize: 9, color: '#334155', marginBottom: 3 },
   results: { fontSize: 9, fontStyle: 'italic', color: '#059669' },
 
-  eduBlock: { marginBottom: 10 },
+  eduBlock: { marginBottom: 1},
   eduTitle: { fontSize: 10, fontWeight: 'bold', color: '#0f172a' },
   eduInst: { fontSize: 9, color: '#64748b', marginBottom: 3 },
   eduDesc: { fontSize: 9, color: '#334155' },
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   certLink: { fontSize: 9, color: '#2563eb', textDecoration: 'underline' },
   certDesc: { fontSize: 9, color: '#334155' },
 
-  volBlock: { marginBottom: 10 },
+  volBlock: { marginBottom: 4 },
   volRole: { fontSize: 10, fontWeight: 'bold', color: '#0f172a' },
   volOrg: { fontSize: 9, color: '#64748b' },
   volDesc: { fontSize: 9, color: '#334155' },
@@ -88,7 +88,7 @@ function translateLinkType(type: string, lang: string, customName?: string) {
   const map: Record<string, Record<string, string>> = {
     pt: { email: 'Email', phone: 'Telefone', linkedin: 'LinkedIn', github: 'GitHub', portfolio: 'Portefólio', other: customName || 'Outro' },
     en: { email: 'Email', phone: 'Phone', linkedin: 'LinkedIn', github: 'GitHub', portfolio: 'Portfolio', other: customName || 'Other' },
-    es: { email: 'Correo', phone: 'Teléfono', linkedin: 'LinkedIn', github: 'GitHub', portfolio: 'Portafolio', other: customName || 'Otro' },
+    es: { email: 'Email', phone: 'Téléphone', linkedin: 'LinkedIn', github: 'GitHub', portfolio: 'Portfolio', other: customName || 'Autre' },
   };
   const l = map[lang as keyof typeof map] ? lang : 'pt';
   return map[l][type] || customName || type;
@@ -121,7 +121,7 @@ function translateMonth(month: string, lang: string) {
   const dict: Record<string, Record<string, string>> = {
     pt: { Jan: 'Jan', Feb: 'Fev', Mar: 'Mar', Apr: 'Abr', May: 'Mai', Jun: 'Jun', Jul: 'Jul', Aug: 'Ago', Sep: 'Set', Oct: 'Out', Nov: 'Nov', Dec: 'Dez' },
     en: { Jan: 'Jan', Feb: 'Feb', Mar: 'Mar', Apr: 'Apr', May: 'May', Jun: 'Jun', Jul: 'Jul', Aug: 'Aug', Sep: 'Sep', Oct: 'Oct', Nov: 'Nov', Dec: 'Dec' },
-    es: { Jan: 'Ene', Feb: 'Feb', Mar: 'Mar', Apr: 'Abr', May: 'May', Jun: 'Jun', Jul: 'Jul', Aug: 'Ago', Sep: 'Sep', Oct: 'Oct', Nov: 'Nov', Dec: 'Dic' },
+    es: { Jan: 'Jan', Feb: 'Fev', Mar: 'Mar', Apr: 'Avr', May: 'Mai', Jun: 'Juin', Jul: 'Juil', Aug: 'Aout', Sep: 'Sep', Oct: 'Oct', Nov: 'Nov', Dec: 'Dec' },
   };
   const l: 'pt'|'en'|'es' = lang === 'en' ? 'en' : lang === 'es' ? 'es' : 'pt';
   return dict[l][month] || month;
@@ -130,7 +130,7 @@ function translateMonth(month: string, lang: string) {
 function translateCurrent(lang: string) {
   const l: 'pt'|'en'|'es' = lang === 'en' ? 'en' : lang === 'es' ? 'es' : 'pt';
   if (l === 'en') return 'Present';
-  if (l === 'es') return 'Actual';
+  if (l === 'es') return 'En cours';
   return 'Atual';
 }
 
@@ -157,7 +157,7 @@ function translateLanguageLevel(level: string, lang: string) {
   // Native level only
   const nativeLevels = {
     en: { native: 'Native' },
-    es: { native: 'Nativo' },
+    es: { native: 'Maternel' },
     pt: { native: 'Nativo' },
   } as const;
 
@@ -204,19 +204,19 @@ export function MinimalTemplate({
         <View style={styles.container}>
           {/* Sidebar */}
           <View style={styles.sidebar}>
-            <Text style={styles.sideSectionTitle}>{personalInfo.name}</Text>
-            {personalInfo.desiredRole && (
-              <Text style={[styles.contactItem, styles.desiredRole, dynamic.accentText]}>{personalInfo.desiredRole}</Text>
-            )}
 
-            <Text style={styles.sideSectionTitle}>{lang === 'en' ? 'Contacts' : lang === 'es' ? 'Contactos' : 'Contactos'}</Text>
+            <Text style={styles.sideSectionTitle}>{lang === 'en' ? 'Contacts' : lang === 'es' ? 'Contact' : 'Contactos'}</Text>
             <Text style={styles.contactItem}>{personalInfo.city} {personalInfo.postalCode ? `• ${personalInfo.postalCode}` : ''}</Text>
             <Text style={styles.contactItem}>{personalInfo.countryCode} {personalInfo.phone}</Text>
             <Text style={styles.contactItem}>{personalInfo.email}</Text>
 
+            <Text style={styles.sideSectionTitle}>{lang === 'en' ? 'References' : lang === 'es' ? 'Références' : 'References'}</Text>
+            <Text style={styles.contactItem}>{"Loïc Mathiot"} {`• Lead Programmer`}</Text>
+            <Text style={styles.contactItem}>{"loic.mathiot@shine-research.com"}</Text>
+
             {links && links.length > 0 && (
               <>
-                <Text style={styles.sideSectionTitle}>{lang === 'en' ? 'Links' : 'Links'}</Text>
+                <Text style={styles.sideSectionTitle}>{lang === 'en' ? 'Links' : 'Portfolio'}</Text>
                 {links.map((l, i) => (
                   <Link key={i} src={getSocialUrl(l.type, l.value)} style={[styles.linkItem, dynamic.link]}>
                     {translateLinkType(l.type.toLowerCase(), lang || 'pt', l.customName)}
@@ -227,7 +227,7 @@ export function MinimalTemplate({
 
             {skills && (
               <>
-                <Text style={styles.sideSectionTitle}>{lang === 'en' ? 'Skills' : lang === 'es' ? 'Habilidades' : 'Competências'}</Text>
+                <Text style={styles.sideSectionTitle}>{lang === 'en' ? 'Skills' : lang === 'es' ? 'Compétences' : 'Competências'}</Text>
                 <View style={styles.skillsWrap}>
                   {skills.split(',').map((s, i) => (
                     <Text key={i} style={[styles.skillPill, dynamic.pill]}>{s.trim()}</Text>
@@ -236,15 +236,66 @@ export function MinimalTemplate({
               </>
             )}
 
+            {education && education.length > 0 && (
+              <>
+                <Text style={[styles.sideSectionTitle]}>{lang === 'en' ? 'Education' : lang === 'es' ? 'Scolarité' : 'Educação'}</Text>
+                {education.map((edu, i) => (
+                  <View key={i} style={styles.eduBlock}>
+                    <Text style={styles.eduTitle}>{edu.startYear}{' - '}{edu.endYear}</Text>
+                    <Text style={styles.eduTitle}>{edu.course}</Text>
+                    <Text style={styles.eduInst}>{edu.institution}</Text>
+                    {edu.description && <Text style={styles.eduDesc}>• {edu.description}</Text>}
+                  </View>
+                ))}
+              </>
+            )}
+
             {languages && languages.length > 0 && (
               <>
-                <Text style={styles.sideSectionTitle}>{lang === 'en' ? 'Languages' : lang === 'es' ? 'Idiomas' : 'Idiomas'}</Text>
+                <Text style={styles.sideSectionTitle}>{lang === 'en' ? 'Languages' : lang === 'es' ? 'Langues' : 'Idiomas'}</Text>
                 {languages.map((lg, i) => (
                   <Text key={i} style={styles.langItem}>{lg.name} — {translateLanguageLevel(lg.level, lang || 'pt')}</Text>
                 ))}
               </>
             )}
+
+            {volunteers && volunteers.length > 0 && (
+              <View style={styles.section}>
+                <Text style={[styles.sideSectionTitle]}>{lang === 'en' ? 'Volunteer Work' : lang === 'es' ? 'Vie Associative' : 'Educação'}</Text>
+                {volunteers.map((vol, i) => (
+                  <View key={i} style={styles.eduBlock}>
+                    <Text style={styles.eduTitle}>{vol.organization}</Text>
+                    <Text style={styles.eduInst}>{vol.role}</Text>
+                    {vol.description && <Text style={styles.eduDesc}>• {vol.description}</Text>}
+                  </View>
+                ))}
+              </View>
+            )}
+
           </View>
+
+
+
+          {/* {volunteers && volunteers.length > 0 && (
+              <View style={styles.section}>
+                <Text style={[styles.sideSectionTitle]}>{lang === 'en' ? 'Volunteer Work' : 'Voluntariado'}</Text>
+                {volunteers.map((vol, i) => (
+                  <View key={i} style={styles.volBlock}>
+                    <View style={styles.roleAndDate}>
+                      <Text style={styles.volRole}>{vol.role}</Text>
+                      <Text style={styles.dateRange}>
+                        {vol.startMonth && vol.startYear ? `${translateMonth(vol.startMonth, lang || 'pt')} ${vol.startYear}` : ''}
+                        {vol.startMonth && vol.startYear && (vol.endMonth || vol.endYear || vol.current) ? ' - ' : ''}
+                        {vol.current ? translateCurrent(lang || 'pt') : vol.endMonth && vol.endYear ? `${translateMonth(vol.endMonth, lang || 'pt')} ${vol.endYear}` : ''}
+                      </Text>
+                    </View>
+                    <Text style={styles.volOrg}>{vol.organization}</Text>
+                    {vol.description && <Text style={styles.volDesc}>• {vol.description}</Text>}
+                    {vol.impact && <Text style={styles.volImpact}>• {vol.impact}</Text>}
+                  </View>
+                ))}
+              </View>
+            )} */}
 
           {/* Main */}
           <View style={styles.main}>
@@ -257,14 +308,14 @@ export function MinimalTemplate({
 
             {resume && (
               <View style={styles.section}>
-                <Text style={[styles.sectionTitle, dynamic.sectionTitle]}>{lang === 'en' ? 'Summary' : lang === 'es' ? 'Resumen' : 'Resumo'}</Text>
+                <Text style={[styles.sectionTitle, dynamic.sectionTitle]}>{lang === 'en' ? 'Summary' : lang === 'es' ? 'Résumé' : 'Resumo'}</Text>
                 <Text style={styles.summary}>{resume}</Text>
               </View>
             )}
 
             {experiences && experiences.length > 0 && (
               <View style={styles.section}>
-                <Text style={[styles.sectionTitle, dynamic.sectionTitle]}>{lang === 'en' ? 'Experience' : lang === 'es' ? 'Experiencia' : 'Experiência'}</Text>
+                <Text style={[styles.sectionTitle, dynamic.sectionTitle]}>{lang === 'en' ? 'Experience' : lang === 'es' ? 'Expériences Professionnelles' : 'Experiência'}</Text>
                 {experiences.map((exp, i) => {
                   const showSep = experiences.length > 1 && i < experiences.length - 1;
                   return (
@@ -282,30 +333,17 @@ export function MinimalTemplate({
                         <Text style={styles.companyName}>{exp.company}</Text>
                       </View>
                       {exp.tech && <Text style={styles.tech}>{exp.tech}</Text>}
-                      {exp.activities && <Text style={styles.activities}>• {exp.activities}</Text>}
-                      {exp.results && <Text style={styles.results}>• {exp.results}</Text>}
+                      {exp.activities && <Text style={styles.activities}>{exp.activities}</Text>}
+                      {exp.results && <Text style={styles.results}>{exp.results}</Text>}
                     </View>
                   );
                 })}
               </View>
             )}
 
-            {education && education.length > 0 && (
-              <View style={styles.section}>
-                <Text style={[styles.sectionTitle, dynamic.sectionTitle]}>{lang === 'en' ? 'Education' : lang === 'es' ? 'Educación' : 'Educação'}</Text>
-                {education.map((edu, i) => (
-                  <View key={i} style={styles.eduBlock}>
-                    <Text style={styles.eduTitle}>{edu.course}</Text>
-                    <Text style={styles.eduInst}>{edu.institution}</Text>
-                    {edu.description && <Text style={styles.eduDesc}>• {edu.description}</Text>}
-                  </View>
-                ))}
-              </View>
-            )}
-
             {projects && projects.length > 0 && (
               <View style={styles.section}>
-                <Text style={[styles.sectionTitle, dynamic.sectionTitle]}>{lang === 'en' ? 'Projects' : lang === 'es' ? 'Proyectos' : 'Projetos'}</Text>
+                <Text style={[styles.sectionTitle, dynamic.sectionTitle]}>{lang === 'en' ? 'Projects' : lang === 'es' ? 'Projets' : 'Projetos'}</Text>
                 {projects.map((proj, i) => (
                   <View key={i} style={styles.projBlock}>
                     <View style={styles.roleAndDate}>
@@ -313,15 +351,15 @@ export function MinimalTemplate({
                       <Text style={styles.projYear}>{proj.year}</Text>
                     </View>
                     {proj.tech && <Text style={styles.projTech}>{proj.tech}</Text>}
-                    {proj.description && <Text style={styles.projDesc}>• {proj.description}</Text>}
+                    {proj.description && <Text style={styles.projDesc}>{proj.description}</Text>}
                     {proj.link && (
                       <Link src={proj.link} style={styles.projLink}>
-                        {lang === 'en' ? 'View Project' : lang === 'es' ? 'Ver Proyecto' : 'Ver Projeto'}
+                        {lang === 'en' ? 'View on Steam' : lang === 'es' ? 'Page Steam' : 'Ver Projeto'}
                       </Link>
                     )}
                     {proj.sourceCode && (
                       <Link src={proj.sourceCode} style={styles.projLink}>
-                        {lang === 'en' ? 'Source Code' : lang === 'es' ? 'Código fuente' : 'Código-fonte'}
+                        {lang === 'en' ? 'Source Code' : lang === 'es' ? 'Code Source' : 'Código-fonte'}
                       </Link>
                     )}
                   </View>
@@ -350,26 +388,6 @@ export function MinimalTemplate({
               </View>
             )}
 
-            {volunteers && volunteers.length > 0 && (
-              <View style={{ ...styles.section, marginBottom: 0 }}>
-                <Text style={[styles.sectionTitle, dynamic.sectionTitle]}>{lang === 'en' ? 'Volunteer Work' : 'Voluntariado'}</Text>
-                {volunteers.map((vol, i) => (
-                  <View key={i} style={styles.volBlock}>
-                    <View style={styles.roleAndDate}>
-                      <Text style={styles.volRole}>{vol.role}</Text>
-                      <Text style={styles.dateRange}>
-                        {vol.startMonth && vol.startYear ? `${translateMonth(vol.startMonth, lang || 'pt')} ${vol.startYear}` : ''}
-                        {vol.startMonth && vol.startYear && (vol.endMonth || vol.endYear || vol.current) ? ' - ' : ''}
-                        {vol.current ? translateCurrent(lang || 'pt') : vol.endMonth && vol.endYear ? `${translateMonth(vol.endMonth, lang || 'pt')} ${vol.endYear}` : ''}
-                      </Text>
-                    </View>
-                    <Text style={styles.volOrg}>{vol.organization}</Text>
-                    {vol.description && <Text style={styles.volDesc}>• {vol.description}</Text>}
-                    {vol.impact && <Text style={styles.volImpact}>• {vol.impact}</Text>}
-                  </View>
-                ))}
-              </View>
-            )}
           </View>
         </View>
       </Page>
